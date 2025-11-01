@@ -81,6 +81,11 @@ int main() {
   print_inputs(n, edges);
   print_dsu(dsu);
 
+  for(std::pair<int, int> &p: edges) {
+    dsu.union_nodes(p.first, p.second);
+    print_dsu(dsu);
+  }
+
 
   return 0;
 }
