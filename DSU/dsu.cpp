@@ -2,6 +2,7 @@
 #include<vector>
 #include<format>
 #include<utility>
+#include<string>
 
 struct DSU {
   std::vector<int> parent;
@@ -34,7 +35,7 @@ struct DSU {
       return false;
     }
     
-    // ensure that pu has the smaller value
+    // ensure that pu has the bigger  value
     // so that we can merge the bigger tree under the smaller one's root
     // to get closer to amortized time complexity
     if (size[pu] < size[pv]) {
@@ -45,7 +46,7 @@ struct DSU {
     // and update the size's
     comps--;
     size[pu] += size[pv];
-    size[pv] = -1;
+    size[pv] = 0;
     parent[pv] = pu;
     return true;
   }
