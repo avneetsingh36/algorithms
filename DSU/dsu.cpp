@@ -2,6 +2,7 @@
 #include<vector>
 #include<cstdlib>
 #include<format>
+#include<utility>
 
 struct DSU {
   std::vector<int> parent;
@@ -23,8 +24,31 @@ struct DSU {
     if (parent[x] != x){
       parent[x] = find(parent[x]);
     }
-
     return parent[x];
+  }
+
+  bool union_nodes(int u, int v){
+    int pu = find(u);
+    int pv = find(v);
+    // if they already have the same parent
+    if (pv == pu) {
+      return false;
+    }
+    
+    // ensure that pu has the smaller value
+    // so that we can merge the bigger tree under the smaller one's root
+    // to get closer to amortized time complexity
+    if (size[pu] < size[pv]) {
+      std::swap(pu, pv);
+    }
+
+    // update amount of components
+    // and update the size's
+    comps--;
+    size[pu] += size[pv];
+    size[pv] = -1;
+    parent[pv] = pu;
+    return true;
   }
 };
 
@@ -56,6 +80,7 @@ int main() {
   DSU dsu(n);
   print_inputs(n, edges);
   print_dsu(dsu);
+
 
   return 0;
 }
